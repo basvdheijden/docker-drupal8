@@ -5,6 +5,7 @@ set -e
 # A remote IP can be obtained by creating a new loopback interface:
 # sudo ifconfig lo0 alias 10.254.254.254
 if [ -n "$XDEBUG_REMOTE_IP" ]; then
+  phpenmod xdebug
   echo "Setting up XDebug on $XDEBUG_REMOTE_IP"
   echo "xdebug.remote_enable=1" >> /etc/php/7.1/apache2/conf.d/20-xdebug.ini
   echo "xdebug.remote_host=\"$XDEBUG_REMOTE_IP\"" >> /etc/php/7.1/apache2/conf.d/20-xdebug.ini
@@ -15,7 +16,7 @@ fi
 # Setup mail.
 if [ -n "$SMTP_HOST" ]; then
   echo "defaults" > /etc/msmtprc
-  echo "tls on" >> /etc/msmtprc
+  echo "tls $SMTP_AUTH" >> /etc/msmtprc
   echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc
   echo "logfile /var/log/msmtp.log" >> /etc/msmtprc
   echo "" >> /etc/msmtprc

@@ -35,9 +35,10 @@ RUN echo Europe/Paris | tee /etc/timezone \
  && npm install -g grunt-cli \
  && sed -i 's/\/var\/www\/html/\/var\/www\/web/g' /etc/apache2/sites-enabled/000-default.conf \
  && composer global require drush/drush:8.* \
- && ln -s /root/.composer/vendor/bin/drush /usr/bin/drush
+ && ln -s /root/.composer/vendor/bin/drush /usr/bin/drush \
+ && phpdismod xdebug
 
-COPY config/php.ini /etc/php/7.0/apache2/php.ini
+COPY config/php.ini /etc/php/7.1/apache2/php.ini
 COPY config/apache2.conf /etc/apache2/apache2.conf
 COPY config/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
 COPY config/scripts /var/scripts
